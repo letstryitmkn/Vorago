@@ -358,7 +358,7 @@ Negotiation: The basics
 **In short:** Trading on issues you care about differently: giving way on what matters less to you for what matters more.
 **Explained:** The term comes from neighbours helping each other roll logs, and later from politicians backing each other's bills. In negotiation, it's how integrative deals are built. It only works if each side knows its own priorities and learns something about the other side's.
 **Example:** A new hire cares most about working from home; the company cares most about salary costs. Trading a slightly lower salary for two remote days a week can beat haggling over salary alone.
-**Why it matters:** Rank your issues before you negotiate. Then trade the ones low on your list for the ones high on theirs.
+**Why it matters:** Rank your issues before you negotiate. Then give way on what matters little to you but a lot to them, in return for what matters a lot to you and little to them.
 
 ## Day VIII
 

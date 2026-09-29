@@ -12,7 +12,125 @@ const AI_LINKS = {
   claude: (q) => `https://claude.ai/new?q=${encodeURIComponent(q)}`,
 };
 const AI_NAMES = { chatgpt: 'ChatGPT', claude: 'Claude' };
-const TEXT_SIZES = { s: 'Small', m: 'Medium', l: 'Large' };
+const TEXT_SIZES = ['s', 'm', 'l'];
+const LANG_NAMES = { en: 'English', vi: 'Tiếng Việt' };
+
+// ---------- Languages ----------
+// Everything the app says, in English and Vietnamese. The loading screen stays in English (it's part of the art).
+// Notes come from packs/<file>.md (English) and packs/vi/<file>.md (Vietnamese, same notes in the same order).
+const STRINGS = {
+  en: {
+    contents: 'Contents', back: '‹ Back', lookup: 'Look it up', ask: 'Ask AI',
+    continue: 'Continue', understood: 'Understood', backToList: 'Back', revisiting: 'Revisiting',
+    day: (d) => `Day ${d}`, behind: (n) => (n === 1 ? '1 day behind' : `${n} days behind`),
+    budsLabel: (n) => `${n} of ${DAILY_NOTES} notes done today`,
+    recall: 'Recall', whatIs: 'What is…', recallTitle: (title) => `${title}?`,
+    thinkFirst: 'think on it first', earlierDay: 'from an earlier day',
+    seeAnswer: 'See answer', remembered: 'Remembered', forgotten: 'Forgotten',
+    dayComplete: (d) => (d ? `Day ${d} complete` : 'Day complete'),
+    learned: (n) => `${['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven'][n] || n} ${n === 1 ? 'note' : 'notes'} learned`,
+    rememberedOf: (r, t) => `${r} of ${t} remembered`,
+    streak: (n) => `${n} ${n === 1 ? 'day' : 'days'} in a row`,
+    gardenClosed: 'The garden is closed for now.', revisit: "Revisit today's notes",
+    noCantoTitle: 'No Canto yet', noCantoText: 'Add a Canto file to the packs folder, then open Vorago again. If you are offline, try again with signal.',
+    allDoneTitle: 'Every Canto finished', allDoneText: 'You have read every note in every Canto. The next Canto will appear here when it is added.',
+    noSignalSaved: 'No signal. Saved to Look up later.', stillOffline: 'Still offline. Try again when you have signal.',
+    savedToLookUp: (n) => (n === 1 ? '1 note saved to look up' : `${n} notes saved to look up`),
+    progress: 'Progress', progressSub: 'Streak, notes learned, calendar',
+    library: 'Library', cantoCount: (n) => `${n} ${n === 1 ? 'Canto' : 'Cantos'}`,
+    lookupLater: 'Look up later', savedCount: (n) => (n ? `${n} saved` : 'Nothing saved'),
+    settings: 'Settings', settingsSub: (ai, size, lang) => `Ask AI: ${ai} · Text: ${size} · ${lang}`,
+    weekdays: ['M', 'T', 'W', 'T', 'F', 'S', 'S'], calComplete: 'Complete', calStarted: 'Started',
+    statLearned: 'notes learned', statStreak: 'days in a row', statLongest: 'longest run', statRemembered: 'remembered',
+    currentCanto: 'Current Canto', notStarted: 'Not started yet', onTrack: 'on track',
+    dayOf: (d, total) => `Day ${d} of ${total}`, notesOf: (done, total) => `${done} of ${total} notes`,
+    lastFiveWeeks: 'Last five weeks',
+    statusFinished: 'Finished', statusCurrent: 'Current', statusPaused: 'Paused', statusNotStarted: 'Not started',
+    shortNotesOf: (done, total) => `${done} / ${total} notes`,
+    newCantos: 'New Cantos appear here when they are added.', noCantos: 'No Cantos yet.',
+    cantoGone: 'This Canto is no longer in the packs folder.', canto: 'Canto',
+    makeCurrent: 'Make this my current Canto', notYetRead: 'not yet read',
+    savedOn: (kind, date) => `${kind} · saved ${date}`,
+    lookupsHint: 'Tap one to open it. It leaves the list once opened.',
+    lookupsEmpty: 'Nothing saved. If you tap Look it up or Ask AI without signal, the note waits here until you are back online.',
+    askOpens: 'Ask AI opens', textSize: 'Text size', language: 'Language',
+    sizes: { s: 'Small', m: 'Medium', l: 'Large' },
+    progressWarning: "Your progress is saved on this phone only. Open Vorago from its home-screen icon rather than a browser tab, and don't clear your browser's website data, or your progress will be lost.",
+    todaysNotes: "Today's notes",
+    subjects: { Psychology: 'Psychology', Persuasion: 'Persuasion', Negotiation: 'Negotiation' },
+    evidence: { Solid: 'Solid', Debated: 'Debated', Legend: 'Legend' },
+    askPrompt: (title, about, known) => `Explain "${title}"${about ? ` (${about})` : ''} in more depth, with real-world examples. Here's what I already know: ${known}`,
+    dateLocale: 'en-GB',
+    installTitle: 'Add Vorago to your home screen',
+    installSub: 'It works offline and keeps your progress safe. In a normal browser tab, progress can be lost.',
+    installIphone: 'In Safari, tap the Share button <span class="kbd">⬆</span>, then <em>Add to Home Screen</em>.',
+    installAndroid: 'In Chrome, tap the menu <span class="kbd">⋮</span>, then <em>Add to Home screen</em> or <em>Install app</em>.',
+    installOk: 'Continue in the browser',
+  },
+  vi: {
+    contents: 'Mục lục', back: '‹ Quay lại', lookup: 'Tra cứu', ask: 'Hỏi AI',
+    continue: 'Tiếp tục', understood: 'Đã hiểu', backToList: 'Quay lại', revisiting: 'Đang đọc lại',
+    day: (d) => `Ngày ${d}`, behind: (n) => `Chậm ${n} ngày`,
+    budsLabel: (n) => `Hôm nay đã xong ${n}/${DAILY_NOTES} ghi chú`,
+    recall: 'Ôn lại', whatIs: 'Bạn còn nhớ…', recallTitle: (title) => `${title} là gì?`,
+    thinkFirst: 'nghĩ một chút đã', earlierDay: 'từ một ngày trước',
+    seeAnswer: 'Xem đáp án', remembered: 'Nhớ rồi', forgotten: 'Quên mất',
+    dayComplete: (d) => (d ? `Hoàn thành Ngày ${d}` : 'Hoàn thành hôm nay'),
+    learned: (n) => `Đã học ${n} ghi chú`,
+    rememberedOf: (r, t) => `nhớ được ${r}/${t}`,
+    streak: (n) => `${n} ngày liên tiếp`,
+    gardenClosed: 'Khu vườn tạm đóng cửa.', revisit: 'Đọc lại ghi chú hôm nay',
+    noCantoTitle: 'Chưa có Canto nào', noCantoText: 'Hãy thêm một tệp Canto vào thư mục packs rồi mở lại Vorago. Nếu đang mất mạng, hãy thử lại khi có sóng.',
+    allDoneTitle: 'Đã học hết mọi Canto', allDoneText: 'Bạn đã đọc hết mọi ghi chú. Canto tiếp theo sẽ xuất hiện ở đây khi được thêm vào.',
+    noSignalSaved: 'Không có mạng. Đã lưu vào mục Tra cứu sau.', stillOffline: 'Vẫn chưa có mạng. Hãy thử lại khi có sóng.',
+    savedToLookUp: (n) => `${n} ghi chú đang chờ tra cứu`,
+    progress: 'Tiến độ', progressSub: 'Chuỗi ngày, ghi chú đã học, lịch',
+    library: 'Thư viện', cantoCount: (n) => `${n} Canto`,
+    lookupLater: 'Tra cứu sau', savedCount: (n) => (n ? `Đã lưu ${n}` : 'Chưa lưu gì'),
+    settings: 'Cài đặt', settingsSub: (ai, size, lang) => `Hỏi AI: ${ai} · Cỡ chữ: ${size} · ${lang}`,
+    weekdays: ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'], calComplete: 'Hoàn thành', calStarted: 'Đã bắt đầu',
+    statLearned: 'ghi chú đã học', statStreak: 'ngày liên tiếp', statLongest: 'chuỗi dài nhất', statRemembered: 'nhớ được',
+    currentCanto: 'Canto hiện tại', notStarted: 'Chưa bắt đầu', onTrack: 'đúng tiến độ',
+    dayOf: (d, total) => `Ngày ${d}/${total}`, notesOf: (done, total) => `${done}/${total} ghi chú`,
+    lastFiveWeeks: 'Năm tuần qua',
+    statusFinished: 'Đã xong', statusCurrent: 'Đang học', statusPaused: 'Tạm dừng', statusNotStarted: 'Chưa bắt đầu',
+    shortNotesOf: (done, total) => `${done}/${total} ghi chú`,
+    newCantos: 'Canto mới sẽ xuất hiện ở đây khi được thêm vào.', noCantos: 'Chưa có Canto nào.',
+    cantoGone: 'Canto này không còn trong thư mục packs.', canto: 'Canto',
+    makeCurrent: 'Chọn làm Canto hiện tại', notYetRead: 'chưa đọc',
+    savedOn: (kind, date) => `${kind} · lưu ngày ${date}`,
+    lookupsHint: 'Chạm vào một mục để mở. Mục đó sẽ rời danh sách sau khi mở.',
+    lookupsEmpty: 'Chưa lưu gì. Nếu bạn bấm Tra cứu hoặc Hỏi AI khi không có mạng, ghi chú sẽ chờ ở đây cho đến khi có mạng lại.',
+    askOpens: 'Hỏi AI bằng', textSize: 'Cỡ chữ', language: 'Ngôn ngữ',
+    sizes: { s: 'Nhỏ', m: 'Vừa', l: 'Lớn' },
+    progressWarning: 'Tiến độ của bạn chỉ được lưu trên điện thoại này. Hãy mở Vorago từ biểu tượng trên màn hình chính thay vì một thẻ trình duyệt, và đừng xóa dữ liệu trang web của trình duyệt, nếu không tiến độ sẽ mất.',
+    todaysNotes: 'Ghi chú hôm nay',
+    subjects: { Psychology: 'Tâm lý học', Persuasion: 'Thuyết phục', Negotiation: 'Đàm phán' },
+    evidence: { Solid: 'Vững chắc', Debated: 'Còn tranh cãi', Legend: 'Huyền thoại' },
+    askPrompt: (title, about, known) => `Giải thích sâu hơn về "${title}"${about ? ` (${about})` : ''}, kèm ví dụ thực tế. Đây là những gì tôi đã biết: ${known}. Hãy trả lời bằng tiếng Việt.`,
+    dateLocale: 'vi-VN',
+    installTitle: 'Thêm Vorago vào màn hình chính',
+    installSub: 'Ứng dụng chạy được khi không có mạng và giữ tiến độ của bạn an toàn. Trong một thẻ trình duyệt bình thường, tiến độ có thể bị mất.',
+    installIphone: 'Trong Safari, bấm nút Chia sẻ <span class="kbd">⬆</span>, rồi chọn <em>Thêm vào MH chính</em>.',
+    installAndroid: 'Trong Chrome, bấm nút menu <span class="kbd">⋮</span>, rồi chọn <em>Thêm vào màn hình chính</em> hoặc <em>Cài đặt ứng dụng</em>.',
+    installOk: 'Tiếp tục trong trình duyệt',
+  },
+};
+function lang() { return STRINGS[state.settings.lang] ? state.settings.lang : 'en'; }
+function t(key, ...args) {
+  const s = STRINGS[lang()][key] ?? STRINGS.en[key];
+  return typeof s === 'function' ? s(...args) : s;
+}
+function subjectName(subject) { return t('subjects')[subject] || subject; }
+function evidenceName(evidence) { return evidence ? t('evidence')[evidence] || evidence : ''; }
+
+// Puts the chosen language on everything written in index.html (the loading screen is left alone)
+function applyLanguage() {
+  document.documentElement.lang = lang();
+  document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-html]').forEach((el) => { el.innerHTML = t(el.dataset.i18nHtml); });
+  document.querySelectorAll('[data-i18n-aria]').forEach((el) => { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
+}
 
 // Testing helpers: ?reset clears progress, ?today=2026-10-02 pretends it's another day,
 // ?nosplash skips the loading screen, ?sw turns on offline mode while testing on localhost
@@ -22,7 +140,8 @@ const params = new URLSearchParams(location.search);
 function freshState() {
   return {
     activePack: null, packs: {}, done: {}, days: {}, reviews: {}, lookups: [],
-    settings: { ai: 'chatgpt', textSize: 'm' },
+    // Language starts as the phone's language (Vietnamese phones get Vietnamese); changeable in Settings
+    settings: { ai: 'chatgpt', textSize: 'm', lang: /^vi\b/i.test(navigator.language || '') ? 'vi' : 'en' },
   };
 }
 function loadState() {
@@ -52,7 +171,7 @@ function toDate(iso) { const [y, m, d] = iso.split('-').map(Number); return new 
 function today() { return params.get('today') || isoDate(new Date()); }
 function addDays(iso, n) { const d = toDate(iso); d.setDate(d.getDate() + n); return isoDate(d); }
 function daysBetween(a, b) { return Math.round((toDate(b) - toDate(a)) / 86400000); }
-function shortDate(iso) { return toDate(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }); }
+function shortDate(iso) { return toDate(iso).toLocaleDateString(t('dateLocale'), { day: 'numeric', month: 'short' }); }
 
 function toRoman(n) {
   const table = [[100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'], [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']];
@@ -112,14 +231,20 @@ function inline(s) {
 }
 function plainText(s) { return s.replace(/\*\*(.+?)\*\*/g, '$1').replace(/\*(.+?)\*/g, '$1'); }
 
-// Each note is two pages: In short + Explained, then Example + Why it matters
-function splitPages(note) {
-  const at = note.paras.findIndex((p) => /^\*\*Example/i.test(p));
-  if (at > 0) return [note.paras.slice(0, at), note.paras.slice(at)];
-  if (note.paras.length < 2) return [note.paras];
-  const mid = Math.ceil(note.paras.length / 2);
-  return [note.paras.slice(0, mid), note.paras.slice(mid)];
+// Each note is two pages: In short + Explained, then Example + Why it matters (Ví dụ + Vì sao quan trọng)
+function splitPages(paras) {
+  const at = paras.findIndex((p) => /^\*\*(Example|Ví dụ):/i.test(p));
+  if (at > 0) return [paras.slice(0, at), paras.slice(at)];
+  if (paras.length < 2) return [paras];
+  const mid = Math.ceil(paras.length / 2);
+  return [paras.slice(0, mid), paras.slice(mid)];
 }
+
+// A note's words in the chosen language (English if there's no Vietnamese version).
+// Progress always uses the English note, so switching language never loses anything.
+function noteTitle(note) { return lang() === 'vi' && note.vi ? note.vi.title : note.title; }
+function noteParas(note) { return lang() === 'vi' && note.vi ? note.vi.paras : note.paras; }
+function packThemes(pack) { return lang() === 'vi' && pack.viThemes ? pack.viThemes : pack.themes; }
 
 // "**In short:** text" becomes a small label on its own line above the text
 function renderParas(paras) {
@@ -177,13 +302,18 @@ let packs = [];
 const noteIndex = new Map(); // id -> { note, pack }
 
 async function loadPacks() {
-  // Start downloading the Cantos we already know about while GitHub is asked for new ones
+  // Start downloading the Cantos we already know about while GitHub is asked for new ones.
+  // Each Canto comes in English (packs/x.md) and Vietnamese (packs/vi/x.md); both are fetched so
+  // switching language works offline too.
   const downloads = new Map();
+  const fetchPack = (path, file) => fetchWithTimeout(path, { cache: 'no-cache' })
+    .then(async (res) => (res.ok ? parsePack(file, await res.text()) : null))
+    .catch(() => null);
   const download = (file) => {
     if (!downloads.has(file)) {
-      downloads.set(file, fetchWithTimeout('packs/' + encodeURIComponent(file), { cache: 'no-cache' })
-        .then(async (res) => (res.ok ? parsePack(file, await res.text()) : null))
-        .catch(() => null));
+      const name = encodeURIComponent(file);
+      downloads.set(file, Promise.all([fetchPack('packs/' + name, file), fetchPack('packs/vi/' + name, file)])
+        .then(([pack, vi]) => (pack ? attachVietnamese(pack, vi) : null)));
     }
     return downloads.get(file);
   };
@@ -192,6 +322,17 @@ async function loadPacks() {
   packs = loaded.filter((p) => p && p.notes.length);
   noteIndex.clear();
   for (const pack of packs) for (const note of pack.notes) noteIndex.set(note.id, { note, pack });
+}
+
+// The Vietnamese file has the same notes in the same order; each one is matched to its English note
+function attachVietnamese(pack, vi) {
+  if (!vi) return pack;
+  const same = vi.notes.length === pack.notes.length
+    && vi.notes.every((n, i) => n.subject === pack.notes[i].subject && n.day === pack.notes[i].day);
+  if (!same) { console.warn(`Vietnamese ${pack.file} doesn't match the English notes; showing English`); return pack; }
+  pack.notes.forEach((n, i) => { n.vi = { title: vi.notes[i].title, paras: vi.notes[i].paras }; });
+  pack.viThemes = vi.themes;
+  return pack;
 }
 
 function isComplete(pack) { return pack.notes.every((n) => state.done[n.id]); }
@@ -234,8 +375,8 @@ function route() {
   if (queue.length) return startRecall(queue);
   if (rec.read.length || Object.keys(rec.results).length) { sealDay(); return showDone(true); }
 
-  if (!packs.length) return showMessage('No Canto yet', 'Add a Canto file to the packs folder, then open Vorago again. If you are offline, try again with signal.');
-  return showMessage('Every Canto finished', 'You have read every note in every Canto. The next Canto will appear here when it is added.');
+  if (!packs.length) return showMessage(t('noCantoTitle'), t('noCantoText'));
+  return showMessage(t('allDoneTitle'), t('allDoneText'));
 }
 
 // ---------- Reading ----------
@@ -247,7 +388,7 @@ function arrearsDays(pack, date) {
   const expected = Math.min((calendarDay - 1) * DAILY_NOTES, pack.notes.length);
   return Math.max(0, Math.floor((expected - doneBefore) / DAILY_NOTES));
 }
-function arrearsText(n) { return n === 1 ? '1 day behind' : `${n} days behind`; }
+function arrearsText(n) { return t('behind', n); }
 
 // A row of lily buds, one per note of the day; finished notes are open lilies.
 // The bud that has just opened gets a small opening animation.
@@ -256,7 +397,7 @@ function renderBuds(el, count) {
   el.innerHTML = Array.from({ length: DAILY_NOTES }, (_, i) => (i < count
     ? `<svg class="open${i === count - 1 && shownBuds === count - 1 ? ' just' : ''}" viewBox="-70 -70 140 140"><use href="#lily-bloom" x="-70" y="-70" width="140" height="140"/></svg>`
     : '<svg viewBox="-10 -44 20 46"><use href="#lily-bud" x="-10" y="-44" width="20" height="46"/></svg>')).join('');
-  el.setAttribute('aria-label', `${count} of ${DAILY_NOTES} notes done today`);
+  el.setAttribute('aria-label', t('budsLabel', count));
   shownBuds = count;
 }
 
@@ -270,8 +411,8 @@ function showRead(note, pack, animate = false) {
     if (!started || started > date) { state.packs[pack.file].startedOn = date; save(); }
   }
 
-  $('r-where').textContent = `Day ${note.day}`;
-  $('r-count').textContent = browsing ? 'Revisiting' : '';
+  $('r-where').textContent = t('day', note.day);
+  $('r-count').textContent = browsing ? t('revisiting') : '';
   $('r-buds').hidden = browsing;
   if (!browsing) renderBuds($('r-buds'), rec.read.length);
 
@@ -280,10 +421,10 @@ function showRead(note, pack, animate = false) {
   $('r-behind').textContent = arrearsText(behind);
   updateReminder();
 
-  $('r-subject').textContent = note.subject || '';
-  $('r-evidence').textContent = note.evidence || '';
-  $('r-title').textContent = note.title;
-  pages = splitPages(note);
+  $('r-subject').textContent = subjectName(note.subject || '');
+  $('r-evidence').textContent = evidenceName(note.evidence);
+  $('r-title').textContent = noteTitle(note);
+  pages = splitPages(noteParas(note));
   renderPage(0, animate);
   show('read');
 }
@@ -296,7 +437,7 @@ function renderPage(index, animate) {
   $('r-body').innerHTML = renderParas(pages[page]);
 
   const button = $('b-understood');
-  button.textContent = !last ? 'Continue' : browsing ? 'Back' : 'Understood';
+  button.textContent = !last ? t('continue') : browsing ? t('backToList') : t('understood');
   button.className = last ? 'primary' : 'next';
 
   const card = $('r-note');
@@ -370,16 +511,16 @@ function browse(note, pack, back) {
 // ---------- Look it up / Ask AI (saved for later when offline) ----------
 function noteQuery(note) {
   const pack = noteIndex.get(note.id)?.pack;
-  const theme = pack?.themes[note.subject];
-  const about = [note.subject, theme].filter(Boolean).join(': ');
-  const known = note.paras.map(plainText).join(' ');
-  return `Explain "${note.title}"${about ? ` (${about})` : ''} in more depth, with real-world examples. Here's what I already know: ${known}`;
+  const theme = pack ? packThemes(pack)[note.subject] : '';
+  const about = [subjectName(note.subject), theme].filter(Boolean).join(': ');
+  const known = noteParas(note).map(plainText).join(' ');
+  return t('askPrompt', noteTitle(note), about, known);
 }
 
 function openExternal(kind, note) {
   const url = kind === 'ask'
     ? (AI_LINKS[state.settings.ai] || AI_LINKS.chatgpt)(noteQuery(note))
-    : `https://www.google.com/search?q=${encodeURIComponent([note.title, note.subject].filter(Boolean).join(' '))}`;
+    : `https://www.google.com/search?q=${encodeURIComponent([noteTitle(note), subjectName(note.subject)].filter(Boolean).join(' '))}`;
   window.open(url, '_blank', 'noopener');
 }
 
@@ -390,7 +531,7 @@ function external(kind) {
       state.lookups.push({ id: current.id, kind, saved: today() });
       save();
     }
-    toast('No signal. Saved to Look up later.');
+    toast(t('noSignalSaved'));
     return;
   }
   openExternal(kind, current);
@@ -402,19 +543,19 @@ function updateReminder() {
   const n = savedLookups().length;
   const el = $('r-reminder');
   el.hidden = !n || !navigator.onLine || browsing;
-  el.textContent = n === 1 ? '1 note saved to look up' : `${n} notes saved to look up`;
+  el.textContent = t('savedToLookUp', n);
 }
 
 let toastTimer = null;
 function toast(message) {
-  const t = $('toast');
-  t.textContent = message;
-  t.hidden = false;
-  t.classList.remove('show');
-  void t.offsetWidth;
-  t.classList.add('show');
+  const el = $('toast');
+  el.textContent = message;
+  el.hidden = false;
+  el.classList.remove('show');
+  void el.offsetWidth;
+  el.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { t.hidden = true; }, 2600);
+  toastTimer = setTimeout(() => { el.hidden = true; }, 2600);
 }
 
 // ---------- Recall ----------
@@ -447,10 +588,10 @@ function showRecallItem() {
   const answered = Object.keys(rec.results).length;
   const total = answered + recall.queue.length - recall.index;
   $('c-count').textContent = `${answered + 1} / ${total}`;
-  $('c-title').textContent = `${note.title}?`;
-  $('c-hint').textContent = rec.read.includes(id) ? 'think on it first' : 'from an earlier day';
-  $('c-subject').textContent = note.subject;
-  $('c-body').innerHTML = renderParas(splitPages(note)[0]);
+  $('c-title').textContent = t('recallTitle', noteTitle(note));
+  $('c-hint').textContent = rec.read.includes(id) ? t('thinkFirst') : t('earlierDay');
+  $('c-subject').textContent = subjectName(note.subject);
+  $('c-body').innerHTML = renderParas(splitPages(noteParas(note))[0]);
   $('c-answer').hidden = true;
   $('c-answer').scrollTop = 0;
   $('c-judge').hidden = true;
@@ -505,22 +646,21 @@ function longestStreak() {
   return best;
 }
 
-const WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven'];
 function showDone(bloomNow) {
   const rec = dayRecord();
   const last = rec.read.length ? noteIndex.get(rec.read[rec.read.length - 1]) : null;
   const dayLabel = last ? last.note.day : '';
-  $('s-where').textContent = last ? `${last.pack.title} · Day ${dayLabel}` : '';
-  $('s-title').textContent = dayLabel ? `Day ${dayLabel} complete` : 'Day complete';
+  $('s-where').textContent = last ? `${last.pack.title} · ${t('day', dayLabel)}` : '';
+  $('s-title').textContent = t('dayComplete', dayLabel);
 
   const learned = rec.read.length;
   const remembered = Object.values(rec.results).filter((r) => r === 'remembered').length;
-  const learnedText = `${WORDS[learned] || learned} ${learned === 1 ? 'note' : 'notes'} learned`;
+  const learnedText = t('learned', learned);
   const recalled = Object.keys(rec.results).length;
-  $('s-sub').textContent = recalled ? `${learnedText} · ${remembered} of ${recalled} remembered` : learnedText;
+  $('s-sub').textContent = recalled ? `${learnedText} · ${t('rememberedOf', remembered, recalled)}` : learnedText;
 
   const n = streak();
-  $('s-streak').textContent = `${n} ${n === 1 ? 'day' : 'days'} in a row`;
+  $('s-streak').textContent = t('streak', n);
   $('b-revisit').hidden = !rec.read.length;
 
   const bloom = $('s-bloom');
@@ -564,14 +704,14 @@ function listButton(label, sub, attrs = '') {
 function contentsPage() {
   const n = savedLookups().length;
   const items = [
-    ['progress', 'Progress', 'Streak, notes learned, calendar'],
-    ['library', 'Library', `${packs.length} ${packs.length === 1 ? 'Canto' : 'Cantos'}`],
-    ['lookups', 'Look up later', n ? `${n} saved` : 'Nothing saved'],
-    ['settings', 'Settings', `Ask AI: ${AI_NAMES[state.settings.ai]} · Text: ${TEXT_SIZES[state.settings.textSize]}`],
+    ['progress', t('progress'), t('progressSub')],
+    ['library', t('library'), t('cantoCount', packs.length)],
+    ['lookups', t('lookupLater'), t('savedCount', n)],
+    ['settings', t('settings'), t('settingsSub', AI_NAMES[state.settings.ai], t('sizes')[state.settings.textSize], LANG_NAMES[lang()])],
   ];
   const targets = { progress: progressPage, library: libraryPage, lookups: lookupsPage, settings: settingsPage };
   return {
-    title: 'Contents',
+    title: t('contents'),
     html: `<div class="list">${items.map(([k, l, s]) => listButton(l, s, `data-go="${k}"`)).join('')}</div>`,
     after: (root) => root.querySelectorAll('[data-go]').forEach((b) => { b.onclick = () => openPage(targets[b.dataset.go]); }),
   };
@@ -588,9 +728,9 @@ function calendarHtml() {
     const cls = d > date ? 'future' : rec?.sealed ? 'complete' : rec?.read?.length ? 'part' : '';
     cells += `<i class="${cls}${d === date ? ' today' : ''}" title="${shortDate(d)}"></i>`;
   }
-  const head = ['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((x) => `<span>${x}</span>`).join('');
+  const head = t('weekdays').map((x) => `<span>${x}</span>`).join('');
   return `<div class="cal-head">${head}</div><div class="cal">${cells}</div>
-    <div class="cal-key"><i class="complete"></i>Complete <i class="part"></i>Started</div>`;
+    <div class="cal-key"><i class="complete"></i>${t('calComplete')} <i class="part"></i>${t('calStarted')}</div>`;
 }
 
 function progressPage() {
@@ -598,7 +738,7 @@ function progressPage() {
   const learned = Object.keys(state.done).length;
   const results = Object.values(state.days).flatMap((d) => Object.values(d.results || {}));
   const pct = results.length ? `${Math.round(results.filter((r) => r === 'remembered').length / results.length * 100)}%` : '–';
-  const stats = [[learned, 'notes learned'], [streak(), 'days in a row'], [longestStreak(), 'longest run'], [pct, 'remembered']]
+  const stats = [[learned, t('statLearned')], [streak(), t('statStreak')], [longestStreak(), t('statLongest')], [pct, t('statRemembered')]]
     .map(([v, l]) => `<div><b>${v}</b><span>${l}</span></div>`).join('');
 
   let folio = '';
@@ -609,15 +749,15 @@ function progressPage() {
     const totalDays = Math.ceil(pack.notes.length / DAILY_NOTES);
     const dayNo = started ? Math.min(daysBetween(started, date) + 1, totalDays) : 0;
     const behind = arrearsDays(pack, date);
-    const where = started ? `Day ${toRoman(dayNo)} of ${toRoman(totalDays)} · ${behind ? arrearsText(behind) : 'on track'}` : 'Not started yet';
-    folio = `<div class="block"><div class="block-label">Current Canto</div>
+    const where = started ? `${t('dayOf', toRoman(dayNo), toRoman(totalDays))} · ${behind ? arrearsText(behind) : t('onTrack')}` : t('notStarted');
+    folio = `<div class="block"><div class="block-label">${t('currentCanto')}</div>
       <div class="block-title">${escapeHtml(pack.title)}</div>
       <div class="bar"><i style="width:${Math.round(done / pack.notes.length * 100)}%"></i></div>
-      <div class="block-sub">${done} of ${pack.notes.length} notes · ${where}</div></div>`;
+      <div class="block-sub">${t('notesOf', done, pack.notes.length)} · ${where}</div></div>`;
   }
   return {
-    title: 'Progress',
-    html: `<div class="stats">${stats}</div>${folio}<div class="block"><div class="block-label">Last five weeks</div>${calendarHtml()}</div>`,
+    title: t('progress'),
+    html: `<div class="stats">${stats}</div>${folio}<div class="block"><div class="block-label">${t('lastFiveWeeks')}</div>${calendarHtml()}</div>`,
   };
 }
 
@@ -625,34 +765,35 @@ function libraryPage() {
   const active = currentPack();
   const rows = packs.map((p) => {
     const done = doneCount(p);
-    const status = isComplete(p) ? 'Finished' : p === active ? 'Current' : done ? 'Paused' : 'Not started';
-    return listButton(p.title, `${status} · ${done} / ${p.notes.length} notes`, `data-file="${escapeHtml(p.file)}"`);
+    const status = isComplete(p) ? t('statusFinished') : p === active ? t('statusCurrent') : done ? t('statusPaused') : t('statusNotStarted');
+    return listButton(p.title, `${status} · ${t('shortNotesOf', done, p.notes.length)}`, `data-file="${escapeHtml(p.file)}"`);
   }).join('');
   return {
-    title: 'Library',
+    title: t('library'),
     html: packs.length
-      ? `<div class="list">${rows}</div><p class="page-note">New Cantos appear here when they are added.</p>`
-      : '<p class="page-note">No Cantos yet.</p>',
+      ? `<div class="list">${rows}</div><p class="page-note">${t('newCantos')}</p>`
+      : `<p class="page-note">${t('noCantos')}</p>`,
     after: (root) => root.querySelectorAll('[data-file]').forEach((b) => { b.onclick = () => openPage(() => folioPage(b.dataset.file)); }),
   };
 }
 
 function folioPage(file) {
   const p = packs.find((x) => x.file === file);
-  if (!p) return { title: 'Library', html: '<p class="page-note">This Canto is no longer in the packs folder.</p>' };
-  const themes = Object.entries(p.themes).map(([s, t]) => `<div><span>${escapeHtml(s)}:</span> ${escapeHtml(t)}</div>`).join('');
+  if (!p) return { title: t('library'), html: `<p class="page-note">${t('cantoGone')}</p>` };
+  const themes = Object.entries(packThemes(p)).map(([s, theme]) => `<div><span>${escapeHtml(subjectName(s))}:</span> ${escapeHtml(theme)}</div>`).join('');
   let html = `<div class="block"><div class="block-title">${escapeHtml(p.title)}</div><div class="themes">${themes}</div></div>`;
-  if (!isComplete(p) && p !== currentPack()) html += '<button type="button" class="next wide" id="make-current">Make this my current Canto</button>';
+  if (!isComplete(p) && p !== currentPack()) html += `<button type="button" class="next wide" id="make-current">${t('makeCurrent')}</button>`;
   html += '<div class="list">';
   let day = null;
   p.notes.forEach((n, i) => {
-    if (n.day !== day) { day = n.day; html += `<div class="list-day">Day ${escapeHtml(day)}</div>`; }
+    if (n.day !== day) { day = n.day; html += `<div class="list-day">${escapeHtml(t('day', day))}</div>`; }
     const done = !!state.done[n.id];
-    html += listButton(n.title, done ? n.subject : `${n.subject} · not yet read`, `data-i="${i}"${done ? '' : ' disabled'}`);
+    const subject = subjectName(n.subject);
+    html += listButton(noteTitle(n), done ? subject : `${subject} · ${t('notYetRead')}`, `data-i="${i}"${done ? '' : ' disabled'}`);
   });
   html += '</div>';
   return {
-    title: 'Canto',
+    title: t('canto'),
     html,
     after: (root) => {
       root.querySelector('#make-current')?.addEventListener('click', () => { state.activePack = p.file; save(); route(); });
@@ -664,16 +805,16 @@ function folioPage(file) {
 function lookupsPage() {
   const items = savedLookups();
   const html = items.length
-    ? `<div class="list">${items.map((l, i) => listButton(noteIndex.get(l.id).note.title, `${l.kind === 'ask' ? 'Ask AI' : 'Look it up'} · saved ${shortDate(l.saved)}`, `data-i="${i}"`)).join('')}</div>
-       <p class="page-note">Tap one to open it. It leaves the list once opened.</p>`
-    : '<p class="page-note">Nothing saved. If you tap Look it up or Ask AI without signal, the note waits here until you are back online.</p>';
+    ? `<div class="list">${items.map((l, i) => listButton(noteTitle(noteIndex.get(l.id).note), t('savedOn', l.kind === 'ask' ? t('ask') : t('lookup'), shortDate(l.saved)), `data-i="${i}"`)).join('')}</div>
+       <p class="page-note">${t('lookupsHint')}</p>`
+    : `<p class="page-note">${t('lookupsEmpty')}</p>`;
   return {
-    title: 'Look up later',
+    title: t('lookupLater'),
     html,
     after: (root) => root.querySelectorAll('[data-i]').forEach((b) => {
       b.onclick = () => {
         const l = items[+b.dataset.i];
-        if (!navigator.onLine) return toast('Still offline. Try again when you have signal.');
+        if (!navigator.onLine) return toast(t('stillOffline'));
         openExternal(l.kind, noteIndex.get(l.id).note);
         state.lookups = state.lookups.filter((x) => x !== l);
         save();
@@ -686,15 +827,18 @@ function lookupsPage() {
 function settingsPage() {
   const choice = (group, value, label, on) => `<button type="button" class="choice${on ? ' on' : ''}" data-${group}="${value}">${label}</button>`;
   const html = `
-    <div class="block"><div class="block-label">Ask AI opens</div>
+    <div class="block"><div class="block-label">${t('language')}</div>
+      <div class="choices">${Object.entries(LANG_NAMES).map(([k, v]) => choice('lang', k, v, lang() === k)).join('')}</div></div>
+    <div class="block"><div class="block-label">${t('askOpens')}</div>
       <div class="choices">${Object.entries(AI_NAMES).map(([k, v]) => choice('ai', k, v, state.settings.ai === k)).join('')}</div></div>
-    <div class="block"><div class="block-label">Text size</div>
-      <div class="choices">${Object.entries(TEXT_SIZES).map(([k, v]) => choice('size', k, v, state.settings.textSize === k)).join('')}</div></div>
-    <p class="page-note">Your progress is saved on this phone only. Open Vorago from its home-screen icon rather than a browser tab, and don't clear your browser's website data, or your progress will be lost.</p>`;
+    <div class="block"><div class="block-label">${t('textSize')}</div>
+      <div class="choices">${TEXT_SIZES.map((k) => choice('size', k, t('sizes')[k], state.settings.textSize === k)).join('')}</div></div>
+    <p class="page-note">${t('progressWarning')}</p>`;
   return {
-    title: 'Settings',
+    title: t('settings'),
     html,
     after: (root) => {
+      root.querySelectorAll('[data-lang]').forEach((b) => { b.onclick = () => { state.settings.lang = b.dataset.lang; save(); applyLanguage(); renderTopPage(); }; });
       root.querySelectorAll('[data-ai]').forEach((b) => { b.onclick = () => { state.settings.ai = b.dataset.ai; save(); renderTopPage(); }; });
       root.querySelectorAll('[data-size]').forEach((b) => { b.onclick = () => { state.settings.textSize = b.dataset.size; save(); applyTextSize(); renderTopPage(); }; });
     },
@@ -706,8 +850,8 @@ function applyTextSize() { document.body.dataset.text = state.settings.textSize;
 function revisitPage() {
   const items = dayRecord().read.map((id) => noteIndex.get(id)).filter(Boolean);
   return {
-    title: "Today's notes",
-    html: `<div class="list">${items.map(({ note }, i) => listButton(note.title, note.subject, `data-i="${i}"`)).join('')}</div>`,
+    title: t('todaysNotes'),
+    html: `<div class="list">${items.map(({ note }, i) => listButton(noteTitle(note), subjectName(note.subject), `data-i="${i}"`)).join('')}</div>`,
     after: (root) => root.querySelectorAll('[data-i]').forEach((b) => {
       b.onclick = () => { const { note, pack } = items[+b.dataset.i]; browse(note, pack, renderTopPage); };
     }),
@@ -717,6 +861,7 @@ function revisitPage() {
 // ---------- Loading screen ----------
 async function start() {
   applyTextSize();
+  applyLanguage();
   // Ask the browser not to clear Vorago's saved data when the phone runs low on space
   if (navigator.storage?.persist) navigator.storage.persist().catch(() => {});
   // Offline mode, set up once the first screen is showing so it doesn't slow it down
