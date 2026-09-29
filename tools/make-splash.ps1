@@ -51,7 +51,7 @@ Write-Host "Border blue: #$('{0:X2}{1:X2}{2:X2}' -f $r, $g, $b)  (use as the spl
 [SplashFill]::FillOutside($px, $w, $h, 110, $b, $g, $r)
 
 $out = [System.Windows.Media.Imaging.BitmapSource]::Create($w, $h, 96, 96, [System.Windows.Media.PixelFormats]::Bgra32, $null, $px, $stride)
-$enc = [System.Windows.Media.Imaging.JpegBitmapEncoder]::new(); $enc.QualityLevel = 90
+$enc = [System.Windows.Media.Imaging.JpegBitmapEncoder]::new(); $enc.QualityLevel = 80
 $enc.Frames.Add([System.Windows.Media.Imaging.BitmapFrame]::Create($out))
 $file = [IO.File]::Create((Join-Path $root 'assets\splash.jpg')); $enc.Save($file); $file.Close()
 Write-Host "Saved assets\splash.jpg ($w x $h)"

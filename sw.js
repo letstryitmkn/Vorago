@@ -1,8 +1,8 @@
 // Offline support: keeps a copy of the app and the Cantos (English and Vietnamese) on the phone.
 // On every release: bump the number here AND the ?v= on style.css and app.js in index.html.
-const VERSION = 'vorago-4';
+const VERSION = 'vorago-5';
 const SHELL = [
-  './', 'index.html', 'style.css?v=4', 'app.js?v=4', 'manifest.webmanifest', 'assets/splash.jpg',
+  './', 'index.html', 'style.css?v=5', 'app.js?v=5', 'manifest.webmanifest', 'assets/splash.jpg',
   'assets/fonts/bodoni-moda-normal.woff2', 'assets/fonts/bodoni-moda-italic.woff2',
   'assets/fonts/crimson-pro-normal.woff2', 'assets/fonts/crimson-pro-italic.woff2',
   // Vietnamese letters, and Playfair Display for Vietnamese mode
