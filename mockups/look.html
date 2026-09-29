@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Umbrarum · Four looks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Crimson+Pro:ital,wght@0,400;0,500;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #dedad2; color: #23201b; font: 15px/1.5 system-ui, sans-serif; }
+  .intro { max-width: 860px; margin: 0 auto; padding: 28px 16px 4px; }
+  .intro h1 { font: 600 22px/1.2 system-ui, sans-serif; margin: 0 0 6px; }
+  .intro p { margin: 0; color: #5a554c; }
+  .grid { display: flex; flex-wrap: wrap; gap: 44px 32px; justify-content: center; padding: 26px 16px 64px; }
+  .col { width: 395px; }
+  .col h2 { font: 600 17px/1.2 system-ui, sans-serif; margin: 0 0 4px; }
+  .col .desc { margin: 0 0 2px; color: #3f3b35; }
+  .col .note { margin: 0 0 14px; color: #77716a; font-size: 13.5px; }
+
+  /* Phone frame: 375 × 780 screen */
+  .phone { width: 395px; height: 800px; border: 10px solid #141414; border-radius: 46px; overflow: hidden; box-shadow: 0 18px 40px rgba(0,0,0,.28); background: #000; }
+  .minirow { display: flex; gap: 18px; align-items: flex-start; margin-top: 20px; }
+  .minirow .phone { zoom: .5; flex: none; }
+  .meta { font-size: 13px; color: #4a463f; padding-top: 4px; }
+  .meta b { display: block; font-weight: 600; margin-bottom: 6px; color: #23201b; }
+  .sw { display: flex; gap: 6px; margin: 4px 0 10px; }
+  .sw i { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(0,0,0,.15); }
+
+  /* Shared reading-screen layout */
+  .screen { height: 100%; display: flex; flex-direction: column; padding: 20px 24px 24px; background: var(--bg); color: var(--ink); font-family: var(--body); position: relative; }
+  .top { display: flex; align-items: center; gap: 10px; }
+  .top .count { margin-left: auto; }
+  .menu { display: inline-flex; flex-direction: column; gap: 4px; margin-left: 14px; }
+  .menu i { display: block; width: 20px; height: 1.5px; background: currentColor; }
+  .dots { display: flex; gap: 6px; margin: 9px 0 24px; }
+  .dots b { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--ink); }
+  .kicker { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .title { margin: 6px 0 2px; }
+  .pg { margin-bottom: 16px; }
+  .label { margin: 0 0 6px; }
+  .screen p { margin: 0 0 18px; }
+  .actions { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .btn { display: flex; align-items: center; justify-content: center; gap: 8px; height: 48px; font: inherit; }
+  .btn svg { width: 16px; height: 16px; flex: none; }
+  .main { height: 54px; width: 100%; }
+
+  /* Shared loading-screen layout */
+  .splash { justify-content: center; align-items: center; text-align: center; padding: 40px 30px; }
+  .splash .touch { position: absolute; left: 0; right: 0; bottom: 64px; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; opacity: .7; }
+  .splash .touch::before { content: ""; display: block; width: 120px; height: 1px; background: currentColor; margin: 0 auto 14px; opacity: .6; }
+
+  /* ── A · Chiaroscuro ── */
+  .chiaro { --bg: #0e0b09; --ink: #ecdfc6; --soft: #a8957a; --gold: #cfa75e; --line: rgba(207,167,94,.38);
+    --head: 'Cormorant Garamond', serif; --body: 'EB Garamond', serif; }
+  .chiaro .screen { background: radial-gradient(110% 55% at 15% 0%, rgba(222,164,86,.17), rgba(222,164,86,0) 65%), radial-gradient(80% 50% at 100% 100%, rgba(0,0,0,.55), rgba(0,0,0,0)), var(--bg); }
+  .chiaro .top { font-style: italic; font-size: 17px; color: var(--soft); }
+  .chiaro .dots b { border-color: var(--gold); }
+  .chiaro .kicker { font-style: italic; font-size: 16px; color: var(--soft); }
+  .chiaro .tag { font-style: normal; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+  .chiaro .tag::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); margin-right: 7px; vertical-align: 2px; box-shadow: 0 0 8px var(--gold); }
+  .chiaro .title { font-family: var(--head); font-weight: 500; font-size: 44px; line-height: 1.05; color: #f4e7cc; }
+  .chiaro .pg { font-style: italic; color: var(--soft); font-size: 15px; }
+  .chiaro .label { font-family: var(--head); font-weight: 600; font-size: 14px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+  .chiaro p { font-size: 17.5px; line-height: 1.62; }
+  .chiaro .ghost { background: transparent; border: 1px solid var(--line); color: var(--ink); border-radius: 4px; font-size: 17px; }
+  .chiaro .main { background: linear-gradient(180deg, #8a2521, #651815); border: 1px solid rgba(255,214,160,.22); color: #f6e8cc; border-radius: 4px; font-family: var(--head); font-size: 22px; font-weight: 600; letter-spacing: .04em; }
+  .chiaro .splash { background: radial-gradient(60% 40% at 50% 40%, rgba(226,168,90,.2), rgba(0,0,0,0) 70%), #0a0807; }
+  .chiaro .s-ars { font-family: var(--head); font-style: italic; font-size: 24px; color: var(--gold); margin-top: 22px; }
+  .chiaro .s-name { font-family: var(--head); font-weight: 500; font-size: 40px; letter-spacing: .14em; text-transform: uppercase; color: #f1e3c6; line-height: 1.1; }
+  .chiaro .s-eng { font-style: italic; font-size: 17px; color: var(--soft); margin-top: 8px; }
+  .chiaro .touch { color: var(--gold); font-family: var(--head); }
+
+  /* ── B · Roman night ── */
+  .roman { --bg: #121314; --ink: #e6e2d9; --soft: #9b968c; --bronze: #bb8c50; --line: rgba(187,140,80,.45);
+    --head: 'Cinzel', serif; --body: 'Crimson Pro', serif;
+    --marble: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='375' height='780'%3E%3Cfilter id='m' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='.0035 .009' numOctaves='5' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 .93 0 0 0 0 .92 0 0 0 0 .89 -3.2 0 0 0 .95'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)' opacity='.14'/%3E%3C/svg%3E"); }
+  .roman .screen { background: var(--marble), linear-gradient(160deg, #1b1c1e, #0d0e0f); }
+  .roman .top { font-family: var(--head); font-size: 13px; letter-spacing: .14em; color: var(--soft); }
+  .roman .dots b { border-color: var(--bronze); border-radius: 0; width: 8px; height: 8px; transform: rotate(45deg); margin: 0 1px; }
+  .roman .kicker { font-family: var(--head); font-size: 11.5px; letter-spacing: .16em; color: var(--soft); text-transform: uppercase; }
+  .roman .tag { border: 1px solid var(--bronze); color: var(--bronze); padding: 3px 8px 2px; font-size: 10.5px; letter-spacing: .2em; }
+  .roman .title { font-family: var(--head); font-weight: 600; font-size: 31px; letter-spacing: .06em; color: #dcd6ca; text-transform: uppercase; text-shadow: 0 -1px 0 rgba(0,0,0,.95), 0 1px 0 rgba(255,255,255,.14); border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+  .roman .pg { font-family: var(--head); font-size: 12px; letter-spacing: .2em; color: var(--soft); margin-top: 10px; }
+  .roman .label { font-family: var(--head); font-size: 12px; letter-spacing: .22em; color: var(--bronze); text-transform: uppercase; }
+  .roman p { font-size: 18.5px; line-height: 1.55; }
+  .roman .ghost { background: rgba(255,255,255,.02); border: 1px solid var(--line); color: var(--ink); border-radius: 2px; font-family: var(--head); font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase; }
+  .roman .main { background: linear-gradient(180deg, #d2a466 0%, #a7773f 55%, #8a602f 100%); border: 0; border-radius: 2px; color: #1b140c; font-family: var(--head); font-weight: 600; font-size: 16px; letter-spacing: .24em; text-transform: uppercase; box-shadow: inset 0 1px 0 rgba(255,236,200,.5); }
+  .roman .splash { background: var(--marble), radial-gradient(70% 45% at 50% 45%, #202123, #0b0c0d); }
+  .roman .rule { width: 190px; border-top: 1px solid var(--bronze); margin: 18px auto; position: relative; }
+  .roman .rule::after { content: ""; position: absolute; left: 50%; top: -4px; width: 7px; height: 7px; background: var(--bronze); transform: translateX(-50%) rotate(45deg); }
+  .roman .s-ars { font-family: var(--head); font-size: 16px; letter-spacing: .5em; color: var(--bronze); padding-left: .5em; }
+  .roman .s-name { font-family: var(--head); font-weight: 600; font-size: 34px; letter-spacing: .14em; color: #dcd6ca; text-shadow: 0 -1px 0 rgba(0,0,0,.95), 0 1px 0 rgba(255,255,255,.16); padding-left: .14em; }
+  .roman .s-eng { font-family: var(--head); font-size: 11px; letter-spacing: .3em; color: var(--soft); }
+  .roman .touch { font-family: var(--head); color: var(--bronze); }
+
+  /* ── C · Venetian masquerade ── */
+  .venice { --bg: #08191d; --ink: #f1e8d6; --soft: #8fa8a4; --gold: #d8b460; --line: rgba(216,180,96,.42);
+    --head: 'Playfair Display', serif; --body: 'Libre Baskerville', serif; }
+  .venice .screen { background: radial-gradient(110% 55% at 50% 0%, #12353d 0%, rgba(18,53,61,0) 70%), var(--bg); }
+  .venice .top { font-family: var(--head); font-style: italic; font-size: 16px; color: var(--soft); }
+  .venice .dots b { border-color: var(--gold); }
+  .venice .kicker { font-family: var(--head); font-style: italic; font-size: 15px; color: var(--soft); }
+  .venice .tag { background: var(--gold); color: #08191d; border-radius: 999px; padding: 3px 10px 2px; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; font-style: normal; font-weight: 700; }
+  .venice .title { font-family: var(--head); font-style: italic; font-weight: 500; font-size: 42px; line-height: 1.05; color: #f6ecd6; }
+  .venice .orn { display: flex; align-items: center; gap: 8px; width: 120px; margin: 10px 0 8px; }
+  .venice .orn::before, .venice .orn::after { content: ""; flex: 1; border-top: 1px solid var(--gold); opacity: .7; }
+  .venice .orn i { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); }
+  .venice .pg { font-family: var(--head); font-style: italic; color: var(--gold); font-size: 15px; }
+  .venice .label { font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+  .venice p { font-size: 15.5px; line-height: 1.78; }
+  .venice .ghost { background: transparent; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); font-size: 14px; }
+  .venice .main { background: linear-gradient(180deg, #e2c275, #c29a45); border: 0; border-radius: 999px; color: #0a1c20; font-family: var(--head); font-style: italic; font-weight: 600; font-size: 21px; }
+  .venice .splash { background:
+      repeating-linear-gradient(60deg, rgba(216,180,96,.07) 0 1px, transparent 1px 46px),
+      repeating-linear-gradient(-60deg, rgba(216,180,96,.07) 0 1px, transparent 1px 46px),
+      radial-gradient(70% 45% at 50% 42%, #133a43, #07161a); }
+  .venice .s-ars { font-family: var(--head); font-style: italic; font-size: 24px; color: var(--gold); margin-top: 20px; }
+  .venice .s-name { font-family: var(--head); font-style: italic; font-weight: 500; font-size: 52px; color: #f6ecd6; line-height: 1.05; }
+  .venice .s-eng { font-style: italic; font-size: 13px; color: var(--soft); margin-top: 10px; }
+  .venice .touch { font-family: var(--head); color: var(--gold); }
+
+  /* ── D · Gothic inquisitor ── */
+  .gothic { --bg: #16110c; --ink: #e8dcbf; --soft: #a8977a; --red: #c0392b; --line: rgba(232,220,191,.26);
+    --head: 'UnifrakturMaguntia', serif; --body: 'Alegreya', serif; }
+  .gothic .screen { background: radial-gradient(120% 75% at 50% 35%, #2b2218 0%, #15100b 78%); box-shadow: inset 0 0 60px rgba(0,0,0,.7); }
+  .gothic .top { font-style: italic; font-size: 16px; color: var(--soft); }
+  .gothic .dots b { border-color: var(--red); }
+  .gothic .kicker { font-variant: small-caps; letter-spacing: .06em; font-size: 16px; color: var(--soft); }
+  .gothic .tag { display: inline-flex; align-items: center; }
+  .gothic .wax { width: 22px; height: 22px; border-radius: 48% 52% 50% 50% / 50% 46% 54% 50%; background: radial-gradient(circle at 35% 30%, #c8412f, #7d1712 60%, #5a0f0b); box-shadow: 0 1px 2px rgba(0,0,0,.6); position: relative; z-index: 1; }
+  .gothic .strip { background: #dccfae; color: #3a2a1a; font-variant: normal; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; padding: 2px 9px 1px 13px; margin-left: -8px; transform: rotate(-3deg); clip-path: polygon(0 0, 100% 0, 93% 50%, 100% 100%, 0 100%); }
+  .gothic .title { font-family: var(--head); font-weight: 400; font-size: 44px; line-height: 1.1; color: #efe2c4; }
+  .gothic .pg { font-style: italic; color: var(--soft); }
+  .gothic .label { font-variant: small-caps; font-size: 17px; letter-spacing: .08em; color: var(--red); font-weight: 700; }
+  .gothic p { font-size: 17.5px; line-height: 1.58; }
+  .gothic p.first::first-letter { font-family: var(--head); color: var(--red); font-size: 2.7em; float: left; line-height: .8; margin: 5px 7px 0 0; }
+  .gothic .ghost { background: transparent; border: 1px solid var(--line); color: var(--ink); border-radius: 3px; font-size: 17px; }
+  .gothic .main { background: linear-gradient(180deg, #9c231c, #6f1611); border: 1px solid rgba(0,0,0,.5); color: #f1e3c5; border-radius: 3px; font-variant: small-caps; font-weight: 700; font-size: 21px; letter-spacing: .1em; }
+  .gothic .splash { background: radial-gradient(70% 45% at 50% 42%, #2e241a, #0f0b07); }
+  .gothic .s-ars { font-family: var(--head); font-size: 28px; color: var(--red); }
+  .gothic .s-name { font-family: var(--head); font-size: 58px; color: #efe2c4; line-height: 1.05; }
+  .gothic .s-eng { font-variant: small-caps; letter-spacing: .12em; font-size: 17px; color: var(--soft); margin-top: 6px; }
+  .gothic .bigseal { width: 78px; height: 78px; border-radius: 48% 52% 50% 50% / 50% 46% 54% 50%; background: radial-gradient(circle at 38% 32%, #c8412f, #8a1a14 55%, #5c0f0b); box-shadow: 0 3px 8px rgba(0,0,0,.7), inset 0 0 0 6px rgba(0,0,0,.14); display: grid; place-items: center; margin: 28px auto 0; }
+  .gothic .bigseal span { font-family: var(--head); font-size: 40px; color: #5d0d09; text-shadow: 0 1px 0 rgba(255,150,120,.35); }
+  .gothic .touch { color: var(--soft); font-variant: small-caps; text-transform: none; font-size: 16px; letter-spacing: .12em; }
+</style>
+</head>
+<body>
+
+<div class="intro">
+  <h1>Umbrarum · four looks</h1>
+  <p>The same note in all four, so you're only comparing the look. The wording (Book, Day, Continue) is placeholder; we decide it after the look. Under each: its loading screen, smaller.</p>
+</div>
+
+<!-- Icons reused in every mockup -->
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></g></symbol>
+  <symbol id="i-ai" viewBox="0 0 24 24"><path d="M12 2.5 14.2 9.8 21.5 12 14.2 14.2 12 21.5 9.8 14.2 2.5 12 9.8 9.8Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+</svg>
+
+<div class="grid">
+
+  <!-- A · Chiaroscuro -->
+  <section class="col chiaro">
+    <h2>A · Chiaroscuro</h2>
+    <p class="desc">Caravaggio's light and dark: near-black, candle-gold, an oxblood button.</p>
+    <p class="note">The most elegant and the easiest to read. It's the "candlelit study" you passed on for Retia, pushed darker.</p>
+    <div class="phone"><div class="screen">
+      <div class="top"><span>Book I · Day I</span><span class="count">0 / 7</span><span class="menu"><i></i><i></i><i></i></span></div>
+      <div class="dots"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div>
+      <div class="kicker"><span>Psychology · How we judge</span><span class="tag">Solid</span></div>
+      <div class="title">Anchoring</div>
+      <div class="pg">i · ii</div>
+      <div class="label">In short</div>
+      <p>The first number you hear pulls your judgment toward it, even when that number is meaningless.</p>
+      <div class="label">Explained</div>
+      <p>In a 1974 study, Tversky and Kahneman spun a wheel rigged to stop at 10 or 65, then asked people what share of African countries were in the UN. Those who saw 10 guessed about 25%; those who saw 65 guessed about 45%. The brain starts from whatever number is on the table and adjusts, but not far enough.</p>
+      <div class="actions"><div class="btn ghost"><svg><use href="#i-search"/></svg>Look it up</div><div class="btn ghost"><svg><use href="#i-ai"/></svg>Ask AI</div></div>
+      <div class="btn main">Continue</div>
+    </div></div>
+    <div class="minirow">
+      <div class="phone"><div class="screen splash">
+        <svg viewBox="0 0 60 120" width="54" aria-hidden="true">
+          <defs>
+            <radialGradient id="glow"><stop offset="0" stop-color="#ffcf8a" stop-opacity=".5"/><stop offset="1" stop-color="#ffcf8a" stop-opacity="0"/></radialGradient>
+            <linearGradient id="candle" x1="0" x2="1"><stop offset="0" stop-color="#b9ab8b"/><stop offset=".5" stop-color="#efe3c7"/><stop offset="1" stop-color="#9d8f71"/></linearGradient>
+          </defs>
+          <circle cx="30" cy="28" r="28" fill="url(#glow)"/>
+          <path d="M30 8 C37 20 39 30 30 42 C21 30 23 20 30 8 Z" fill="#f2b64f"/>
+          <path d="M30 20 C33.5 27 33.5 33 30 39 C26.5 33 26.5 27 30 20 Z" fill="#fff2cf"/>
+          <line x1="30" y1="40" x2="30" y2="47" stroke="#2a211a" stroke-width="1.6"/>
+          <rect x="21" y="47" width="18" height="70" rx="1.5" fill="url(#candle)"/>
+        </svg>
+        <div class="s-ars">Ars</div>
+        <div class="s-name">Umbrarum</div>
+        <div class="s-eng">The Art of Shadows</div>
+        <div class="touch">Touch to continue</div>
+      </div></div>
+      <div class="meta"><b>Palette</b>
+        <div class="sw"><i style="background:#0e0b09"></i><i style="background:#ecdfc6"></i><i style="background:#cfa75e"></i><i style="background:#7c1f1c"></i></div>
+        <b>Fonts</b>Cormorant Garamond<br>EB Garamond
+      </div>
+    </div>
+  </section>
+
+  <!-- B · Roman night -->
+  <section class="col roman">
+    <h2>B · Roman night</h2>
+    <p class="desc">Black marble, carved Roman capitals, bronze.</p>
+    <p class="note">The most different from Retia: ancient Rome, not the Renaissance. Romans carved U as V, hence VMBRARVM.</p>
+    <div class="phone"><div class="screen">
+      <div class="top"><span>Book I · Day I</span><span class="count">0 / 7</span><span class="menu"><i></i><i></i><i></i></span></div>
+      <div class="dots"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div>
+      <div class="kicker"><span>Psychology · How we judge</span><span class="tag">Solid</span></div>
+      <div class="title">Anchoring</div>
+      <div class="pg">i · ii</div>
+      <div class="label">In short</div>
+      <p>The first number you hear pulls your judgment toward it, even when that number is meaningless.</p>
+      <div class="label">Explained</div>
+      <p>In a 1974 study, Tversky and Kahneman spun a wheel rigged to stop at 10 or 65, then asked people what share of African countries were in the UN. Those who saw 10 guessed about 25%; those who saw 65 guessed about 45%. The brain starts from whatever number is on the table and adjusts, but not far enough.</p>
+      <div class="actions"><div class="btn ghost"><svg><use href="#i-search"/></svg>Look it up</div><div class="btn ghost"><svg><use href="#i-ai"/></svg>Ask AI</div></div>
+      <div class="btn main">Continue</div>
+    </div></div>
+    <div class="minirow">
+      <div class="phone"><div class="screen splash">
+        <div class="s-ars">ARS</div>
+        <div class="rule"></div>
+        <div class="s-name">VMBRARVM</div>
+        <div class="rule"></div>
+        <div class="s-eng">THE ART OF SHADOWS</div>
+        <div class="touch">Touch to continue</div>
+      </div></div>
+      <div class="meta"><b>Palette</b>
+        <div class="sw"><i style="background:#121314"></i><i style="background:#e6e2d9"></i><i style="background:#bb8c50"></i><i style="background:#9b968c"></i></div>
+        <b>Fonts</b>Cinzel<br>Crimson Pro
+      </div>
+    </div>
+  </section>
+
+  <!-- C · Venetian masquerade -->
+  <section class="col venice">
+    <h2>C · Venetian masquerade</h2>
+    <p class="desc">Midnight teal and gold, with a mask on the loading screen.</p>
+    <p class="note">The most colourful. Masks fit persuasion. The fonts are 1700s-style, Casanova's era.</p>
+    <div class="phone"><div class="screen">
+      <div class="top"><span>Book I · Day I</span><span class="count">0 / 7</span><span class="menu"><i></i><i></i><i></i></span></div>
+      <div class="dots"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div>
+      <div class="kicker"><span>Psychology · How we judge</span><span class="tag">Solid</span></div>
+      <div class="title">Anchoring</div>
+      <div class="orn"><i></i></div>
+      <div class="pg">i · ii</div>
+      <div class="label">In short</div>
+      <p>The first number you hear pulls your judgment toward it, even when that number is meaningless.</p>
+      <div class="label">Explained</div>
+      <p>In a 1974 study, Tversky and Kahneman spun a wheel rigged to stop at 10 or 65, then asked people what share of African countries were in the UN. Those who saw 10 guessed about 25%; those who saw 65 guessed about 45%. The brain starts from whatever number is on the table and adjusts, but not far enough.</p>
+      <div class="actions"><div class="btn ghost"><svg><use href="#i-search"/></svg>Look it up</div><div class="btn ghost"><svg><use href="#i-ai"/></svg>Ask AI</div></div>
+      <div class="btn main">Continue</div>
+    </div></div>
+    <div class="minirow">
+      <div class="phone"><div class="screen splash">
+        <svg viewBox="0 0 120 64" width="150" aria-hidden="true">
+          <defs><mask id="eyes"><rect width="120" height="64" fill="#fff"/>
+            <ellipse cx="37" cy="27" rx="12.5" ry="6.5" transform="rotate(-10 37 27)" fill="#000"/>
+            <ellipse cx="83" cy="27" rx="12.5" ry="6.5" transform="rotate(10 83 27)" fill="#000"/></mask></defs>
+          <path d="M4 20 C18 4 46 6 60 17 C74 6 102 4 116 20 C113 40 94 54 72 48 C66 46 62 42 60 39 C58 42 54 46 48 48 C26 54 7 40 4 20 Z" fill="#d8b460" mask="url(#eyes)"/>
+          <path d="M18 14 C26 9 34 8 42 10 M78 10 C86 8 94 9 102 14" stroke="#f3dc9a" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".75"/>
+        </svg>
+        <div class="s-ars">Ars</div>
+        <div class="s-name">Umbrarum</div>
+        <div class="s-eng">The Art of Shadows</div>
+        <div class="touch">Touch to continue</div>
+      </div></div>
+      <div class="meta"><b>Palette</b>
+        <div class="sw"><i style="background:#08191d"></i><i style="background:#f1e8d6"></i><i style="background:#d8b460"></i><i style="background:#8fa8a4"></i></div>
+        <b>Fonts</b>Playfair Display<br>Libre Baskerville
+      </div>
+    </div>
+  </section>
+
+  <!-- D · Gothic inquisitor -->
+  <section class="col gothic">
+    <h2>D · Gothic inquisitor</h2>
+    <p class="desc">Dark parchment, blackletter, red ink, a wax "purity seal" as the evidence tag.</p>
+    <p class="note">The most 40k. Headings in red like medieval rubrics. Blackletter is slower to read and can tip into theatrical.</p>
+    <div class="phone"><div class="screen">
+      <div class="top"><span>Book I · Day I</span><span class="count">0 / 7</span><span class="menu"><i></i><i></i><i></i></span></div>
+      <div class="dots"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div>
+      <div class="kicker"><span>Psychology · How we judge</span><span class="tag"><i class="wax"></i><span class="strip">Solid</span></span></div>
+      <div class="title">Anchoring</div>
+      <div class="pg">i · ii</div>
+      <div class="label">In short</div>
+      <p class="first">The first number you hear pulls your judgment toward it, even when that number is meaningless.</p>
+      <div class="label">Explained</div>
+      <p>In a 1974 study, Tversky and Kahneman spun a wheel rigged to stop at 10 or 65, then asked people what share of African countries were in the UN. Those who saw 10 guessed about 25%; those who saw 65 guessed about 45%. The brain starts from whatever number is on the table and adjusts, but not far enough.</p>
+      <div class="actions"><div class="btn ghost"><svg><use href="#i-search"/></svg>Look it up</div><div class="btn ghost"><svg><use href="#i-ai"/></svg>Ask AI</div></div>
+      <div class="btn main">Continue</div>
+    </div></div>
+    <div class="minirow">
+      <div class="phone"><div class="screen splash">
+        <div class="s-ars">Ars</div>
+        <div class="s-name">Umbrarum</div>
+        <div class="s-eng">The Art of Shadows</div>
+        <div class="bigseal"><span>U</span></div>
+        <div class="touch">Touch to continue</div>
+      </div></div>
+      <div class="meta"><b>Palette</b>
+        <div class="sw"><i style="background:#16110c"></i><i style="background:#e8dcbf"></i><i style="background:#c0392b"></i><i style="background:#a8977a"></i></div>
+        <b>Fonts</b>UnifrakturMaguntia<br>Alegreya
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

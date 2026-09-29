@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Umbrarum · Chiaroscuro v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #dedad2; color: #23201b; font: 15px/1.5 system-ui, sans-serif; }
+  .intro { max-width: 860px; margin: 0 auto; padding: 28px 16px 4px; }
+  .intro h1 { font: 600 22px/1.2 system-ui, sans-serif; margin: 0 0 6px; }
+  .intro p { margin: 0; color: #5a554c; }
+  .grid { display: flex; flex-wrap: wrap; gap: 44px 32px; justify-content: center; padding: 26px 16px 64px; }
+  .col { width: 395px; }
+  .col h2 { font: 600 17px/1.2 system-ui, sans-serif; margin: 0 0 4px; }
+  .col .note { margin: 0 0 14px; color: #5a554c; }
+
+  :root { --bg: #0e0b09; --ink: #ecdfc6; --soft: #a8957a; --gold: #cfa75e; --crimson: #9e1c20; --line: rgba(207,167,94,.38);
+    --head: 'Cormorant Garamond', serif; --body: 'EB Garamond', serif; }
+  .phone { width: 395px; height: 800px; border: 10px solid #141414; border-radius: 46px; overflow: hidden; box-shadow: 0 18px 40px rgba(0,0,0,.28); }
+  .screen { height: 100%; display: flex; flex-direction: column; padding: 22px 24px 24px; color: var(--ink); font-family: var(--body);
+    background: radial-gradient(110% 55% at 15% 0%, rgba(222,164,86,.17), rgba(222,164,86,0) 65%), radial-gradient(80% 50% at 100% 100%, rgba(0,0,0,.55), rgba(0,0,0,0)), var(--bg); }
+
+  .top { display: flex; align-items: center; font-style: italic; font-size: 17px; color: var(--soft); }
+  .top .count { margin-left: auto; font-style: normal; font-size: 15px; letter-spacing: .06em; }
+  .menu { display: inline-flex; flex-direction: column; gap: 4px; margin-left: 18px; }
+  .menu i { display: block; width: 20px; height: 1.5px; background: currentColor; }
+  .kicker { display: flex; justify-content: space-between; margin-top: 44px; font-family: var(--head); font-weight: 600; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--soft); }
+  .kicker .tag { color: var(--gold); }
+  .title { font-family: var(--head); font-weight: 500; font-size: 46px; line-height: 1.05; color: #f4e7cc; margin: 8px 0 26px; }
+
+  .label { font-family: var(--head); font-weight: 600; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin: 0 0 6px; }
+  .screen p { font-size: 17.5px; line-height: 1.62; margin: 0 0 20px; }
+
+  .actions { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .btn { display: flex; align-items: center; justify-content: center; gap: 8px; height: 48px; border-radius: 4px; }
+  .btn svg { width: 16px; height: 16px; }
+  .ghost { border: 1px solid var(--line); color: var(--ink); font-size: 17px; }
+  .main { height: 54px; font-family: var(--head); font-size: 22px; font-weight: 600; letter-spacing: .04em; }
+  .continue { border: 1px solid var(--ink); color: var(--ink); }
+  .understood { background: var(--crimson); color: #f6e8cc; }
+</style>
+</head>
+<body>
+
+<div class="intro">
+  <h1>Chiaroscuro · both pages of a note</h1>
+  <p>Page i ends with a quiet ivory Continue; page ii ends with the red-drapery Understood, so the red only appears when you finish a note.</p>
+</div>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></g></symbol>
+  <symbol id="i-ai" viewBox="0 0 24 24"><path d="M12 2.5 14.2 9.8 21.5 12 14.2 14.2 12 21.5 9.8 14.2 2.5 12 9.8 9.8Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+</svg>
+
+<div class="grid">
+  <section class="col">
+    <h2>Page i</h2><p class="note">In short + Explained → Continue (ivory outline)</p>
+    <div class="phone"><div class="screen">
+      <div class="top"><span>Day I</span><span class="count">0 / 7</span><span class="menu"><i></i><i></i><i></i></span></div>
+      <div class="kicker"><span>Psychology</span><span class="tag">Solid</span></div>
+      <div class="title">Anchoring</div>
+      <div class="label">In short</div>
+      <p>The first number you hear pulls your judgment toward it, even when that number is meaningless.</p>
+      <div class="label">Explained</div>
+      <p>In a 1974 study, Tversky and Kahneman spun a wheel rigged to stop at 10 or 65, then asked people what share of African countries were in the UN. Those who saw 10 guessed about 25%; those who saw 65 guessed about 45%. The brain starts from whatever number is on the table and adjusts, but not far enough.</p>
+      <div class="actions"><div class="btn ghost"><svg><use href="#i-search"/></svg>Look it up</div><div class="btn ghost"><svg><use href="#i-ai"/></svg>Ask AI</div></div>
+      <div class="btn main continue">Continue</div>
+    </div></div>
+  </section>
+
+  <section class="col">
+    <h2>Page ii</h2><p class="note">Example + Why it matters → Understood (red drapery)</p>
+    <div class="phone"><div class="screen">
+      <div class="top"><span>Day I</span><span class="count">0 / 7</span><span class="menu"><i></i><i></i><i></i></span></div>
+      <div class="kicker"><span>Psychology</span><span class="tag">Solid</span></div>
+      <div class="title">Anchoring</div>
+      <div class="label">Example</div>
+      <p>A jacket tagged “Was $200, now $120” feels like a bargain, even if it was never worth more than $80. The $200 is the anchor. Car prices, salaries and house sales all start the same way: the first number sets the range.</p>
+      <div class="label">Why it matters</div>
+      <p>In a negotiation, if you know what something is worth, name the first number and make it bold but defensible. If they anchor first, don't haggle from their number: restate your own.</p>
+      <div class="actions"><div class="btn ghost"><svg><use href="#i-search"/></svg>Look it up</div><div class="btn ghost"><svg><use href="#i-ai"/></svg>Ask AI</div></div>
+      <div class="btn main understood">Understood</div>
+    </div></div>
+  </section>
+</div>
+</body>
+</html>

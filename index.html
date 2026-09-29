@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#7B9DB1">
+  <meta name="description" content="Seven notes a day on psychology, persuasion and negotiation.">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Vorago">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>Vorago</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <!-- ?v= must match VERSION in sw.js; change both on every release so phones never mix old and new files -->
+  <link rel="stylesheet" href="style.css?v=1">
+  <link rel="preload" href="assets/splash.jpg" as="image">
+  <link rel="preload" href="assets/fonts/bodoni-moda-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/crimson-pro-normal.woff2" as="font" type="font/woff2" crossorigin>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="icon-menu" viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="14" y2="17"/></symbol>
+    <!-- Lily: one petal, a closed bud, and the open flower (white with a green throat, golden anthers) -->
+    <symbol id="lily-petal" viewBox="-12 -62 24 64" overflow="visible"><path d="M0 0 C-11 -16 -10 -42 0 -60 C10 -42 11 -16 0 0 Z" fill="#fff" stroke="#5d5872" stroke-width="1.3"/><path d="M0 0 C-5 -7 -5 -14 0 -20 C5 -14 5 -7 0 0 Z" fill="#c9dcae"/><path d="M0 -4 L0 -48" stroke="#a9c48c" stroke-width="1.1"/></symbol>
+    <symbol id="lily-bloom" viewBox="-70 -70 140 140">
+      <use href="#lily-petal" x="-12" y="-62" width="24" height="64"/>
+      <use href="#lily-petal" x="-12" y="-62" width="24" height="64" transform="rotate(60)"/>
+      <use href="#lily-petal" x="-12" y="-62" width="24" height="64" transform="rotate(120)"/>
+      <use href="#lily-petal" x="-12" y="-62" width="24" height="64" transform="rotate(180)"/>
+      <use href="#lily-petal" x="-12" y="-62" width="24" height="64" transform="rotate(240)"/>
+      <use href="#lily-petal" x="-12" y="-62" width="24" height="64" transform="rotate(300)"/>
+      <path d="M0 0 L-14 -26 M0 0 L14 -26 M0 0 L-27 -8 M0 0 L27 -8 M0 0 L-8 27 M0 0 L10 26" stroke="#7f9a60" stroke-width="1.3" fill="none"/>
+      <g fill="#c08a2e"><ellipse cx="-14" cy="-27" rx="2.4" ry="4.2" transform="rotate(-28 -14 -27)"/><ellipse cx="14" cy="-27" rx="2.4" ry="4.2" transform="rotate(28 14 -27)"/><ellipse cx="-28" cy="-8" rx="2.4" ry="4.2" transform="rotate(-72 -28 -8)"/><ellipse cx="28" cy="-8" rx="2.4" ry="4.2" transform="rotate(72 28 -8)"/><ellipse cx="-8" cy="28" rx="2.4" ry="4.2" transform="rotate(16 -8 28)"/><ellipse cx="10" cy="27" rx="2.4" ry="4.2" transform="rotate(-20 10 27)"/></g>
+      <circle r="4.5" fill="#8fae6c"/>
+    </symbol>
+    <symbol id="lily-bud" viewBox="-10 -44 20 46"><path d="M0 0 C-8 -10 -7 -30 0 -42 C7 -30 8 -10 0 0 Z" fill="#f4f8ee" stroke="#5d5872" stroke-width="1.3"/><path d="M0 0 C-6 -6 -6 -14 0 -20 C6 -14 6 -6 0 0 Z" fill="#b9d19a"/></symbol>
+  </svg>
+
+  <!-- Loading screen -->
+  <!-- The artwork (assets/splash.jpg) already contains the icon, name and quote; it is shown whole on the border blue -->
+  <section id="splash" class="screen splash" role="img" aria-label="Vorago. Pandora opened the jar and the world fell, until nothing was left but hope.">
+    <div class="splash-art">
+      <div class="splash-bottom">
+        <div class="loading-line" aria-hidden="true"><i></i></div>
+        <div class="continue">Touch to continue</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- First open outside the home-screen app: how to install -->
+  <section id="install" class="screen centered" hidden>
+    <div class="spacer"></div>
+    <img class="install-icon" src="assets/apple-touch-icon.png" alt="">
+    <h1 class="done-title">Add Vorago to your home screen</h1>
+    <p class="done-sub">It works offline and keeps your progress safe. In a normal browser tab, progress can be lost.</p>
+    <div class="install-steps">
+      <div><b>iPhone</b>In Safari, tap the Share button <span class="kbd">⬆</span>, then <em>Add to Home Screen</em>.</div>
+      <div><b>Android</b>In Chrome, tap the menu <span class="kbd">⋮</span>, then <em>Add to Home screen</em> or <em>Install app</em>.</div>
+    </div>
+    <div class="spacer"></div>
+    <button class="next wide" id="b-install-ok" type="button">Continue in the browser</button>
+  </section>
+
+  <!-- Reading a note -->
+  <section id="read" class="screen" hidden>
+    <header class="topbar">
+      <span id="r-where"></span>
+      <span class="buds" id="r-buds" aria-label="Notes done today"></span>
+      <span class="topright"><span id="r-count"></span><button class="menu" type="button" data-menu aria-label="Contents"><svg aria-hidden="true"><use href="#icon-menu"/></svg></button></span>
+    </header>
+    <div class="behind" id="r-behind" hidden></div>
+    <button class="reminder" id="r-reminder" type="button" hidden></button>
+    <article class="note" id="r-note">
+      <div class="kicker"><span id="r-subject"></span><span class="evidence" id="r-evidence"></span></div>
+      <h1 class="title" id="r-title"></h1>
+      <div class="body" id="r-body"></div>
+    </article>
+    <footer class="actions">
+      <div class="row">
+        <button class="ghost" id="b-lookup" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.5" y1="15.5" x2="21" y2="21"/></svg>
+          Look it up
+        </button>
+        <button class="ghost" id="b-ask" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 L13.8 10.2 L21 12 L13.8 13.8 L12 21 L10.2 13.8 L3 12 L10.2 10.2 Z"/></svg>
+          Ask AI
+        </button>
+      </div>
+      <button class="primary" id="b-understood" type="button">Understood</button>
+    </footer>
+  </section>
+
+  <!-- Recall -->
+  <section id="recall" class="screen" hidden>
+    <header class="topbar"><span>Recall</span><span id="c-count"></span></header>
+    <div class="recall-q">
+      <div class="whatis">What is…</div>
+      <h1 class="title" id="c-title"></h1>
+      <div class="hint" id="c-hint"></div>
+    </div>
+    <article class="note recall-a" id="c-answer" hidden>
+      <div class="kicker"><span id="c-subject"></span></div>
+      <div class="body" id="c-body"></div>
+    </article>
+    <footer class="actions">
+      <button class="next" id="b-see" type="button">See answer</button>
+      <div class="row" id="c-judge" hidden>
+        <button class="outline" id="b-remembered" type="button">Remembered</button>
+        <button class="outline" id="b-forgotten" type="button">Forgotten</button>
+      </div>
+    </footer>
+  </section>
+
+  <!-- Day complete: the lily opens -->
+  <section id="done" class="screen centered" hidden>
+    <header class="topbar">
+      <span id="s-where"></span>
+      <span class="topright"><button class="menu" type="button" data-menu aria-label="Contents"><svg aria-hidden="true"><use href="#icon-menu"/></svg></button></span>
+    </header>
+    <div class="spacer"></div>
+    <svg class="bloom" id="s-bloom" viewBox="0 0 140 140" aria-hidden="true"><use href="#lily-bloom" width="140" height="140"/></svg>
+    <h1 class="done-title" id="s-title"></h1>
+    <p class="done-sub" id="s-sub"></p>
+    <p class="done-streak" id="s-streak"></p>
+    <div class="spacer"></div>
+    <p class="closed">The garden is closed for now.</p>
+    <button class="link" id="b-revisit" type="button">Revisit today's notes</button>
+  </section>
+
+  <!-- Messages -->
+  <section id="message" class="screen centered" hidden>
+    <header class="topbar">
+      <span></span>
+      <span class="topright"><button class="menu" type="button" data-menu aria-label="Contents"><svg aria-hidden="true"><use href="#icon-menu"/></svg></button></span>
+    </header>
+    <div class="spacer"></div>
+    <h1 class="done-title" id="m-title"></h1>
+    <p class="done-sub" id="m-text"></p>
+    <div class="spacer"></div>
+  </section>
+
+  <!-- Contents, Progress, Library, Look up later, Settings -->
+  <section id="page" class="screen" hidden>
+    <header class="pagebar">
+      <button class="back" id="p-back" type="button">‹ Back</button>
+      <h1 class="page-title" id="p-title"></h1>
+    </header>
+    <div class="page-body" id="p-body"></div>
+  </section>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <script src="app.js?v=1"></script>
+</body>
+</html>
