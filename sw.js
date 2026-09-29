@@ -1,8 +1,8 @@
 // Offline support: keeps a copy of the app and the Cantos on the phone.
 // On every release: bump the number here AND the ?v= on style.css and app.js in index.html.
-const VERSION = 'vorago-1';
+const VERSION = 'vorago-2';
 const SHELL = [
-  './', 'index.html', 'style.css?v=1', 'app.js?v=1', 'manifest.webmanifest', 'assets/splash.jpg',
+  './', 'index.html', 'style.css?v=2', 'app.js?v=2', 'manifest.webmanifest', 'assets/splash.jpg',
   'assets/fonts/bodoni-moda-normal.woff2', 'assets/fonts/bodoni-moda-italic.woff2',
   'assets/fonts/crimson-pro-normal.woff2', 'assets/fonts/crimson-pro-italic.woff2',
 ];

@@ -62,6 +62,8 @@ Strands: **Psychology:** how we judge and decide, how groups sway us, and famous
 | XIV | Gambler's fallacy *(S)* · Base rate neglect *(S)* · Survivorship bias *(S)* | Inoculation *(S)* · Subliminal advertising *(L)* | Tactical empathy *(D)* · Labelling emotions *(D)* |
 | XV | The 7-38-55 rule *(L)* · Learning styles *(L)* · The 10% brain myth *(L)* | The yes ladder *(D)* · Rule of three *(S)* | Winner's curse *(S)* · Ultimatum game *(S)* |
 
+**✅ Written:** all 15 days / 105 notes are in `packs/canto-01.md` (2026-09-29). Checked: 7 notes a day in 3 / 2 / 2 order, every note has its evidence tag and all four parts, no duplicate titles, matches this table, and every page fits one screen without scrolling on iPhone (375×812, 430×932), iPhone SE, Galaxy S24 (360×780), Pixel (412×915) and Galaxy Fold closed and open.
+
 *(S) Solid · (D) Debated · (L) Legend.* Totals: 76 Solid, 21 Debated, 8 Legend. Day XV ends Canto I on "myths you've probably heard", a good one to share with friends.
 
 ### Notes to self for writing (the honest versions)

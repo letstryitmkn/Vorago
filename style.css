@@ -121,8 +121,8 @@ body[data-text="l"] { --note-size: 20px; }
 .body .label { display: block; font-family: var(--display); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin-bottom: 5px; }
 .body strong { font-weight: 600; }
 
-/* Short screens (iPhone SE, small Androids): tighter spacing so a page still fits without scrolling */
-@media (max-height: 720px) {
+/* Short or narrow screens (iPhone SE, Galaxy S24 and similar Androids): tighter spacing so a page still fits without scrolling */
+@media (max-height: 800px), (max-width: 365px) {
   .screen { padding-top: calc(env(safe-area-inset-top) + 12px); padding-bottom: calc(env(safe-area-inset-bottom) + 12px); }
   .note { margin-top: 16px; margin-bottom: 10px; }
   .title { font-size: 29px; margin: 6px 0 14px; }
