@@ -61,24 +61,31 @@ body {
 .centered .topbar { width: 100%; }
 
 /* ---------- Loading screen ---------- */
-/* The artwork is always shown whole (its words are part of the picture), as big as fits,
-   on its own border blue, so any screen shape just gets a little blue around it */
+/* Phones: the artwork fills the whole screen (a little of its edges is cropped rather than leaving blue gaps).
+   Wide screens (unfolded Fold, tablets): filling would crop away the icon and quote, so the artwork is
+   shown whole instead, on its own border blue. Sizes use the screen's real size (container units). */
 .splash {
   max-width: none;
-  padding: 0;
   background: var(--blue);
-  align-items: center;
-  justify-content: center;
+  container-type: size;
 }
+#splash { padding: 0; } /* beats the short-screen padding below, so the art reaches every edge */
 .splash-art {
-  --art-w: min(100vw, calc(100vh * 848 / 1855));
-  position: relative;
+  --art-w: max(100vw, calc(100vh * 848 / 1855));   /* fallback for older phones */
+  --art-w: max(100cqw, calc(100cqh * 848 / 1855)); /* cover the screen */
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: var(--art-w);
   aspect-ratio: 848 / 1855;
   background: url('assets/splash.jpg') center / 100% 100% no-repeat;
 }
-@supports (height: 100dvh) {
-  .splash-art { --art-w: min(100vw, calc(100dvh * 848 / 1855)); }
+@media (min-aspect-ratio: 3/5) {
+  .splash-art {
+    --art-w: min(100vw, calc(100vh * 848 / 1855));
+    --art-w: min(100cqw, calc(100cqh * 848 / 1855)); /* fit inside */
+  }
 }
 /* In the open sky between the vines and the clouds (the spot marked on the art) */
 .splash-bottom {
